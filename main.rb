@@ -1,12 +1,5 @@
-# __object__|__object__|__object__
-# __object__|__object__|__object__
-#   object  |  object  |  object
-
-#use array
-
-#array.to_s
-#use array to make board
-array = ["_","_","|","_","_"]
+board_array = ["_","_","_","|","_","_","_","\n","_","_","_","|",
+"_","_","_","\n"," "," "," ","|"," "," "," "]
 
 puts "This is my Tic Tac Toe Game!\n"
-puts array.to_s
+puts board_array.join
