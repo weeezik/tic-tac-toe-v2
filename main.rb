@@ -28,7 +28,9 @@ player_one = Player.new('X')
 player_two = Player.new('O')
 
 # all_positions array is for movement (going from one position to the next)
-all_positions = [pos_one, pos_two, pos_three, pos_four, pos_five, pos_six, pos_seven, pos_eight]
+all_positions = [pos_one, pos_two, pos_three, pos_four, pos_five, pos_six, pos_seven, pos_eight, pos_nine]
+
+all_players = [player_one, player_two]
 
 board_array = ['_', pos_one.position_state, '_', '|', '_', pos_two.position_state, '_', '|', '_', pos_three.position_state, '_', "\n",
                '_', pos_four.position_state, '_', '|', '_', pos_five.position_state, '_', '|', '_', pos_six.position_state, '_', "\n",
@@ -48,7 +50,7 @@ while player_input != "\r"
   if current_position < 9
     current_position += 1
     # (reverses the previous position's state and changes the moved to position's state)
-    all_positions[current_position].position_state = player_one.player_side
+    all_positions[current_position].position_state = all_players[0].player_side
     all_positions[current_position - 1].position_state = BLANK16
   else
     current_position = 0
@@ -63,7 +65,14 @@ while player_input != "\r"
 end
 
 #when enter key is pressed this runs
-puts 'Next player turn: ' + player_two.player_side
+puts 'Next player turn.'
+all_positions.delete_at(current_position)
+current_position = 0
+all_positions[current_position].position_state = all_players[1].player_side
+puts ['_', pos_one.position_state, '_', '|', '_', pos_two.position_state, '_', '|', '_', pos_three.position_state, '_', "\n",
+'_', pos_four.position_state, '_', '|', '_', pos_five.position_state, '_', '|', '_', pos_six.position_state, '_', "\n",
+' ', pos_seven.position_state, ' ', '|', ' ', pos_eight.position_state, ' ', '|', ' ', pos_nine.position_state, ' '].join
+
 # puts O is pos_two if pos_one is taken
 # If player_one selects pos_one to put their "X",
 # pos_one is removed from the array so it cannot be changed.
