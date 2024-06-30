@@ -36,7 +36,8 @@ board_array = ['_', pos_one.position_state, '_', '|', '_', pos_two.position_stat
                '_', pos_four.position_state, '_', '|', '_', pos_five.position_state, '_', '|', '_', pos_six.position_state, '_', "\n",
                ' ', pos_seven.position_state, ' ', '|', ' ', pos_eight.position_state, ' ', '|', ' ', pos_nine.position_state, ' ']
 
-puts "This is my Tic Tac Toe Game!\n"
+puts "Tic Tac Toe! Player 1 is 'X'. Player 2 is 'O'.
+Use arrow keys to navigate. Press Enter to select position. Player 1 goes first..."
 puts board_array.join
 BLANK16 = '_'
 BLANK79 = ' '
