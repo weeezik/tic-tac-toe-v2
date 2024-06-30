@@ -29,7 +29,7 @@ player_two = Player.new('O')
 
 # all_positions array is for movement (going from one position to the next)
 all_positions = [pos_one, pos_two, pos_three, pos_four, pos_five, pos_six, pos_seven, pos_eight, pos_nine]
-
+# all_players array is for switching turns
 all_players = [player_one, player_two]
 
 board_array = ['_', pos_one.position_state, '_', '|', '_', pos_two.position_state, '_', '|', '_', pos_three.position_state, '_', "\n",
@@ -48,33 +48,35 @@ current_position = 0
 while player_input != "\r"
   player_input = STDIN.getch
   next unless player_input == "\e"
-  if current_position < 9
+  case current_position
+  when (0..5)
     current_position += 1
-    # (reverses the previous position's state and changes the moved to position's state)
     all_positions[current_position].position_state = all_players[0].player_side
     all_positions[current_position - 1].position_state = BLANK16
-  else
+  when (6..7)
+    current_position += 1
+    all_positions[current_position].position_state = all_players[0].player_side
+    all_positions[current_position - 1].position_state = BLANK79
+  when current_position = 8
     current_position = 0
+    all_positions[current_position].position_state = all_players[0].player_side
+    all_positions[8].position_state = BLANK79
   end
   puts ['_', pos_one.position_state, '_', '|', '_', pos_two.position_state, '_', '|', '_', pos_three.position_state, '_', "\n",
         '_', pos_four.position_state, '_', '|', '_', pos_five.position_state, '_', '|', '_', pos_six.position_state, '_', "\n",
         ' ', pos_seven.position_state, ' ', '|', ' ', pos_eight.position_state, ' ', '|', ' ', pos_nine.position_state, ' '].join
-  # player movement is a non-destructive change
-
-  # 1-6 logic
-  # 7-9 logic
 end
 
-#when enter key is pressed this runs
+# when enter key is pressed this runs
 puts 'Next player turn.'
 all_positions.delete_at(current_position)
 current_position = 0
 all_positions[current_position].position_state = all_players[1].player_side
 puts ['_', pos_one.position_state, '_', '|', '_', pos_two.position_state, '_', '|', '_', pos_three.position_state, '_', "\n",
-'_', pos_four.position_state, '_', '|', '_', pos_five.position_state, '_', '|', '_', pos_six.position_state, '_', "\n",
-' ', pos_seven.position_state, ' ', '|', ' ', pos_eight.position_state, ' ', '|', ' ', pos_nine.position_state, ' '].join
+      '_', pos_four.position_state, '_', '|', '_', pos_five.position_state, '_', '|', '_', pos_six.position_state, '_', "\n",
+      ' ', pos_seven.position_state, ' ', '|', ' ', pos_eight.position_state, ' ', '|', ' ', pos_nine.position_state, ' '].join
 
-# puts O is pos_two if pos_one is taken
+# puts O in pos_two if pos_one is taken
 # If player_one selects pos_one to put their "X",
 # pos_one is removed from the array so it cannot be changed.
 # when board is destructively modified do a win condition check
