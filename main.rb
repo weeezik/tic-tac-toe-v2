@@ -37,46 +37,57 @@ board_array = ['_', pos_one.position_state, '_', '|', '_', pos_two.position_stat
                ' ', pos_seven.position_state, ' ', '|', ' ', pos_eight.position_state, ' ', '|', ' ', pos_nine.position_state, ' ']
 
 puts "Tic Tac Toe! Player 1 is 'X'. Player 2 is 'O'.
-Use arrow keys to navigate. Press Enter to select position. Player 1 goes first..."
+Use arrow keys to navigate. Press Enter to select position. Player 1 goes first. 
+PRESS ENTER TO BEGIN."
 puts board_array.join
 BLANK16 = '_'
 BLANK79 = ' '
 
-# Single player turn
-player_input = ' '
-current_position = 0
-while player_input != "\r"
+def turn_movement(player_input = ' ', current_position, pos_arr, play_arr)
   player_input = STDIN.getch
-  next unless player_input == "\e"
+  return unless player_input == "\e"
+
   case current_position
   when (0..5)
-    current_position += 1
-    all_positions[current_position].position_state = all_players[0].player_side
-    all_positions[current_position - 1].position_state = BLANK16
+    return current_position += 1
+    pos_arr[current_position].position_state = play_arr[0].player_side
+    pos_arr[current_position - 1].position_state = BLANK16
   when (6..7)
-    current_position += 1
+    return current_position += 1
     all_positions[current_position].position_state = all_players[0].player_side
     all_positions[current_position - 1].position_state = BLANK79
   when current_position = 8
-    current_position = 0
+    return current_position = 0
     all_positions[current_position].position_state = all_players[0].player_side
     all_positions[8].position_state = BLANK79
+  else
+    puts 'Invalid current_position value.'
   end
-  puts ['_', pos_one.position_state, '_', '|', '_', pos_two.position_state, '_', '|', '_', pos_three.position_state, '_', "\n",
-        '_', pos_four.position_state, '_', '|', '_', pos_five.position_state, '_', '|', '_', pos_six.position_state, '_', "\n",
-        ' ', pos_seven.position_state, ' ', '|', ' ', pos_eight.position_state, ' ', '|', ' ', pos_nine.position_state, ' '].join
+  puts "\n" + ['_', pos_arr[0].position_state, '_', '|', '_', pos_arr[1].position_state, '_', '|', '_', pos_arr[2].position_state, '_', "\n",
+               '_', pos_arr[3].position_state, '_', '|', '_', pos_arr[4].position_state, '_', '|', '_', pos_arr[5].position_state, '_', "\n",
+               ' ', pos_arr[6].position_state, ' ', '|', ' ', pos_arr[7].position_state, ' ', '|', ' ', pos_arr[8].position_state, ' '].join
 end
 
+# Single player turn
+player_input = ' '
+current_position = 0
+# while player_input != "\r"
+#   turn_movement player_input, current_position,
+#                 pos_arr = all_positions, play_arr = all_players
+# end
 # when enter key is pressed this runs
 puts 'Next player turn.'
-all_positions.delete_at(current_position)
+all_positions.delete_at(current_position) # pos_whatevernumber is removed from array so it cannot be further modified
 current_position = 0
 all_positions[current_position].position_state = all_players[1].player_side
 puts ['_', pos_one.position_state, '_', '|', '_', pos_two.position_state, '_', '|', '_', pos_three.position_state, '_', "\n",
       '_', pos_four.position_state, '_', '|', '_', pos_five.position_state, '_', '|', '_', pos_six.position_state, '_', "\n",
       ' ', pos_seven.position_state, ' ', '|', ' ', pos_eight.position_state, ' ', '|', ' ', pos_nine.position_state, ' '].join
+# do a win condition check
 
-# puts O in pos_two if pos_one is taken
-# If player_one selects pos_one to put their "X",
-# pos_one is removed from the array so it cannot be changed.
-# when board is destructively modified do a win condition check
+#press Enter 
+puts "Tic Tac Toe! Player 1 is 'X'. Player 2 is 'O'.
+Use arrow keys to navigate. Press Enter to select position. Player 1 goes first. 
+PRESS ENTER TO BEGIN."
+initial_player_input = STDIN.getch
+
