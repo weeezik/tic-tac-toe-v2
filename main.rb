@@ -44,27 +44,16 @@ puts board_array.join
 win_check_array = []
 
 def game_result_check(win_check_array)
-  if win_check_array.count > 5
-    win_check_array.each do |position_object|
-      puts position_object.position_state
-    end
-    puts "There are enough X's and O's to determine a winner."
-    # check diagonal, horizontal, and vertical
-  else
-    win_check_array.each do |position_object|
-      puts position_object.position_state
-    end
-    puts "There are not enough X's and O's to determine a winner."
-  end
+  win_check_array.count > 5
 end
 
 # Starting parameters
 # curr_player = 0
 
 # Single player turn
+curr_player = 0
 while game_result_check(win_check_array) != true
   current_position = 0
-  curr_player = 0
   player_input = ' '
   while player_input != "\r"
     player_input = STDIN.getch
@@ -75,11 +64,11 @@ while game_result_check(win_check_array) != true
       current_position += 1
       all_positions[current_position].position_state = all_players[curr_player].player_side
       all_positions[current_position - 1].position_state = BLANK16
-    when (6..7)
+    when (6..7) # -3..-2 (reverse array positions)
       current_position += 1
       all_positions[current_position].position_state = all_players[curr_player].player_side
       all_positions[current_position - 1].position_state = BLANK79
-    when current_position = 8
+    else
       current_position = 0
       all_positions[current_position].position_state = all_players[curr_player].player_side
       all_positions[8].position_state = BLANK79
@@ -88,15 +77,23 @@ while game_result_check(win_check_array) != true
                  '_', pos_four.position_state, '_', '|', '_', pos_five.position_state, '_', '|', '_', pos_six.position_state, '_', "\n",
                  ' ', pos_seven.position_state, ' ', '|', ' ', pos_eight.position_state, ' ', '|', ' ', pos_nine.position_state, ' '].join
   end
-
   # when enter key is pressed this runs
   puts "\n" + 'Next player turn.'
+  # switch player
+  curr_player = 1 if curr_player == 0
+  curr_player = 0 if curr_player == 1
+  # curr_player = 1 if all_players[curr_player].player_side == 'X'
+  # curr_player = 0 if all_players[curr_player].player_side == 'O'
+
+  # removes position selected and sends to win_check_array
   win_check_array.push(all_positions[current_position])
+  all_positions.delete_at(current_position)
+  # resets position
   current_position = 0
-  curr_player = 1 if all_players[curr_player].player_side == 'X'
-  curr_player = 0 if all_players[curr_player].player_side == 'O'
+  # shows board with other player
   all_positions[current_position].position_state = all_players[curr_player].player_side
   puts ['_', pos_one.position_state, '_', '|', '_', pos_two.position_state, '_', '|', '_', pos_three.position_state, '_', "\n",
         '_', pos_four.position_state, '_', '|', '_', pos_five.position_state, '_', '|', '_', pos_six.position_state, '_', "\n",
         ' ', pos_seven.position_state, ' ', '|', ' ', pos_eight.position_state, ' ', '|', ' ', pos_nine.position_state, ' '].join
+  # puts game_result_check(win_check_array)
 end
