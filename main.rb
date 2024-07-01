@@ -1,4 +1,5 @@
 require 'io/console' # for STDIN.getch
+require 'pry-byebug'
 
 class Position
   def initialize(position_state)
@@ -41,18 +42,20 @@ BLANK79 = ' '
 puts "Tic Tac Toe! Player 1 is 'X'. Player 2 is 'O'.
 Use any arrow key to navigate. Press Enter to select position. Player 1 goes first."
 puts board_array.join
-win_check_array = []
 
-def game_result_check(win_check_array)
-  win_check_array.count > 5
+def game_result_check(win_check_array, curr_player)
+  if win_check_array.count > 5
+    puts "Enough to check for winner during #{curr_player} turn."
+    # true if [3 in a row]
+  else
+    puts "Not enough to check for winner during #{curr_player} turn."
+  end
 end
-
-# Starting parameters
-# curr_player = 0
 
 # Single player turn
 curr_player = 0
-while game_result_check(win_check_array) != true
+win_check_array = []
+while game_result_check(win_check_array, curr_player) != true
   current_position = 0
   player_input = ' '
   while player_input != "\r"
@@ -79,21 +82,20 @@ while game_result_check(win_check_array) != true
   end
   # when enter key is pressed this runs
   puts "\n" + 'Next player turn.'
-  # switch player
-  curr_player = 1 if curr_player == 0
-  curr_player = 0 if curr_player == 1
-  # curr_player = 1 if all_players[curr_player].player_side == 'X'
-  # curr_player = 0 if all_players[curr_player].player_side == 'O'
-
   # removes position selected and sends to win_check_array
   win_check_array.push(all_positions[current_position])
   all_positions.delete_at(current_position)
   # resets position
   current_position = 0
-  # shows board with other player
+  # switch player
+  if all_players[curr_player].player_side == 'X'
+    curr_player = 1
+  elsif all_players[curr_player].player_side == 'O'
+    curr_player = 0
+  end
+  # shows board with the opposing, next player
   all_positions[current_position].position_state = all_players[curr_player].player_side
   puts ['_', pos_one.position_state, '_', '|', '_', pos_two.position_state, '_', '|', '_', pos_three.position_state, '_', "\n",
         '_', pos_four.position_state, '_', '|', '_', pos_five.position_state, '_', '|', '_', pos_six.position_state, '_', "\n",
         ' ', pos_seven.position_state, ' ', '|', ' ', pos_eight.position_state, ' ', '|', ' ', pos_nine.position_state, ' '].join
-  # puts game_result_check(win_check_array)
 end
