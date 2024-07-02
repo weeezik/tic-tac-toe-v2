@@ -59,7 +59,6 @@ def game_result_check(win_check_array, _curr_player)
   if win_check_array.count > 4
     # all win type check
     win_possibilities.each do |win_type| # vert_wins, hori_wins, and diag_wins
-      # return_check_value = false
       win_type.each do |poss_win|
         x = poss_win[0]
         y = poss_win[1]
@@ -68,8 +67,12 @@ def game_result_check(win_check_array, _curr_player)
             puts "One of the winning combinations contains all the same position state. Player wins!"
             true
         else
-          "No winning combinations."
+          if check_hash.count >= 8
+            puts "Tie! Restart the game."
+            exit
+          else
           false
+          end
         end
       end
     end
