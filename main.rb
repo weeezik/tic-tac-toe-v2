@@ -47,11 +47,12 @@ puts board_array.join
 def game_result_check(win_check_array, curr_player)
   if win_check_array.count > 4
     puts "Enough to check for winner during #{curr_player} turn."
-    number_check = []
+    check_hash = Hash.new
     win_check_array.each do |pos_obj|
-      number_check << pos_obj.position_number
+      check_hash[pos_obj.position_number] = pos_obj.position_state
     end
-    puts number_check.sort
+    #check_hash logic here
+    puts check_hash
     return true
   else
     puts "Not enough to check for winner during #{curr_player} turn."
