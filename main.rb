@@ -1,13 +1,8 @@
 require 'io/console' # for STDIN.getch
 require 'pry-byebug'
 
-class Position
-  def initialize(position_state, position_number)
-    @position_state = position_state
-    @position_number = position_number
-  end
-  attr_accessor :position_state, :position_number
-end
+require_relative 'lib/player'
+require_relative 'lib/position'
 
 pos_one = Position.new('X', 1)
 pos_two = Position.new('_', 2)
@@ -18,13 +13,6 @@ pos_six = Position.new('_', 6)
 pos_seven = Position.new(' ', 7)
 pos_eight = Position.new(' ', 8)
 pos_nine = Position.new(' ', 9)
-
-class Player
-  def initialize(player_side)
-    @player_side = player_side
-  end
-  attr_accessor :player_side
-end
 
 player_one = Player.new('X')
 player_two = Player.new('O')
@@ -40,22 +28,16 @@ board_array = ['_', pos_one.position_state, '_', '|', '_', pos_two.position_stat
 BLANK16 = '_'
 BLANK79 = ' '
 
-puts "Tic Tac Toe! Player 1 is 'X'. Player 2 is 'O'.
-Use any arrow key to navigate. Press Enter to select position. Player 1 goes first."
-puts board_array.join
-
 def game_result_check(win_check_array, _curr_player)
   check_hash = {}
   vert_wins = [[1, 4, 7], [2, 5, 8], [3, 6, 9]]
   hori_wins = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
   diag_wins = [[1, 5, 9], [3, 5, 7]]
   win_possibilities = [vert_wins, hori_wins, diag_wins]
-
   # create check_hash
   win_check_array.each do |pos_obj|
     check_hash[pos_obj.position_number] = pos_obj.position_state
   end
-
   if win_check_array.count > 4
     # all win type check
     win_possibilities.each do |win_type| # vert_wins, hori_wins, and diag_wins
@@ -80,6 +62,10 @@ def game_result_check(win_check_array, _curr_player)
     false
   end
 end
+
+puts "Tic Tac Toe! Player 1 is 'X'. Player 2 is 'O'.
+Use any arrow key to navigate. Press Enter to select position. Player 1 goes first."
+puts board_array.join
 
 # Single player turn
 curr_player = 0
