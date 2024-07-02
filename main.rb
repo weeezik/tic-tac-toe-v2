@@ -2,21 +2,22 @@ require 'io/console' # for STDIN.getch
 require 'pry-byebug'
 
 class Position
-  def initialize(position_state)
+  def initialize(position_state, position_number)
     @position_state = position_state
+    @position_number = position_number
   end
-  attr_accessor :position_state
+  attr_accessor :position_state, :position_number
 end
 
-pos_one = Position.new('X')
-pos_two = Position.new('_')
-pos_three = Position.new('_')
-pos_four = Position.new('_')
-pos_five = Position.new('_')
-pos_six = Position.new('_')
-pos_seven = Position.new(' ')
-pos_eight = Position.new(' ')
-pos_nine = Position.new(' ')
+pos_one = Position.new('X', 1)
+pos_two = Position.new('_', 2)
+pos_three = Position.new('_', 3)
+pos_four = Position.new('_', 4)
+pos_five = Position.new('_', 5)
+pos_six = Position.new('_', 6)
+pos_seven = Position.new(' ', 7)
+pos_eight = Position.new(' ', 8)
+pos_nine = Position.new(' ', 9)
 
 class Player
   def initialize(player_side)
@@ -44,11 +45,17 @@ Use any arrow key to navigate. Press Enter to select position. Player 1 goes fir
 puts board_array.join
 
 def game_result_check(win_check_array, curr_player)
-  if win_check_array.count > 5
+  if win_check_array.count > 4
     puts "Enough to check for winner during #{curr_player} turn."
-    # true if [3 in a row]
+    number_check = []
+    win_check_array.each do |pos_obj|
+      number_check << pos_obj.position_number
+    end
+    puts number_check.sort
+    return true
   else
     puts "Not enough to check for winner during #{curr_player} turn."
+    return false
   end
 end
 
