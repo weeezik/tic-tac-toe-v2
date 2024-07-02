@@ -50,21 +50,20 @@ def game_result_check(win_check_array, curr_player)
   hori_wins = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
   diag_wins = [[1, 5, 9], [3, 5, 7]]
   win_possibilities = [vert_wins, hori_wins, diag_wins]
-  if win_check_array.count > 4
-    puts "Enough to check for winner during Player #{curr_player + 1} turn."
-    # create check_hash
-    win_check_array.each do |pos_obj|
-      check_hash[pos_obj.position_number] = pos_obj.position_state
-    end
+
+  # create check_hash
+  win_check_array.each do |pos_obj|
+    check_hash[pos_obj.position_number] = pos_obj.position_state
+  end
+
+  if win_check_array.count > 4  
     # all win type check
-    win_possibilities.each do |win_type| #vert_wins, hori_wins, and diag_wins
+    win_possibilities.each do |win_type| # vert_wins, hori_wins, and diag_wins
       win_type.each do |poss_win|
-        x = poss_win[0]
-        y = poss_win[1]
-        z = poss_win[2]
+        x = poss_win[0]; y = poss_win[1]; z = poss_win[2]
         if check_hash.include?(x && y && z) && check_hash[x] == check_hash[y] &&
            check_hash[y] == check_hash[z]
-          puts "Player #{curr_player} wins!"
+          # puts "Player #{curr_player + 1} wins!"
           true
         else
           false
@@ -72,10 +71,11 @@ def game_result_check(win_check_array, curr_player)
       end
     end
   else
-    puts "Not enough to check for winner during Player #{curr_player + 1} turn."
     false
   end
 end
+
+
 
 # Single player turn
 curr_player = 0
@@ -123,4 +123,5 @@ while game_result_check(win_check_array, curr_player) != true
   puts ['_', pos_one.position_state, '_', '|', '_', pos_two.position_state, '_', '|', '_', pos_three.position_state, '_', "\n",
         '_', pos_four.position_state, '_', '|', '_', pos_five.position_state, '_', '|', '_', pos_six.position_state, '_', "\n",
         ' ', pos_seven.position_state, ' ', '|', ' ', pos_eight.position_state, ' ', '|', ' ', pos_nine.position_state, ' '].join
+  p game_result_check(win_check_array, curr_player)
 end
