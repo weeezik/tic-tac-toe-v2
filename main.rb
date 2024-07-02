@@ -45,18 +45,30 @@ Use any arrow key to navigate. Press Enter to select position. Player 1 goes fir
 puts board_array.join
 
 def game_result_check(win_check_array, curr_player)
+  check_hash = Hash.new
+  vert_wins = [[1, 4, 7], [2, 5, 8], [3, 6, 9]]
   if win_check_array.count > 4
-    puts "Enough to check for winner during #{curr_player} turn."
-    check_hash = Hash.new
+    puts "Enough to check for winner during #{curr_player + 1} turn."
     win_check_array.each do |pos_obj|
       check_hash[pos_obj.position_number] = pos_obj.position_state
     end
-    #check_hash logic here
-    puts check_hash
-    return true
+    vert_wins.each do |poss_win|
+      x = poss_win[0]; y = poss_win[1]; z = poss_win[2]
+      if check_hash.include?(x && y && z) && check_hash[x] == check_hash[y] && 
+        check_hash[y] == check_hash[z]
+        puts "Player #{curr_player + 1} wins!"
+        true
+      else
+        false
+      end
+    end
+    # hori_wins here
+    # diag_wins here
+    puts check_hash #do these two lines belong here?
+    true
   else
-    puts "Not enough to check for winner during #{curr_player} turn."
-    return false
+    puts "Not enough to check for winner during Player #{curr_player + 1} turn."
+    false
   end
 end
 
