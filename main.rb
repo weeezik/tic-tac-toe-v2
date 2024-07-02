@@ -44,7 +44,7 @@ puts "Tic Tac Toe! Player 1 is 'X'. Player 2 is 'O'.
 Use any arrow key to navigate. Press Enter to select position. Player 1 goes first."
 puts board_array.join
 
-def game_result_check(win_check_array, curr_player)
+def game_result_check(win_check_array, _curr_player)
   check_hash = {}
   vert_wins = [[1, 4, 7], [2, 5, 8], [3, 6, 9]]
   hori_wins = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
@@ -56,16 +56,19 @@ def game_result_check(win_check_array, curr_player)
     check_hash[pos_obj.position_number] = pos_obj.position_state
   end
 
-  if win_check_array.count > 4  
+  if win_check_array.count > 4
     # all win type check
     win_possibilities.each do |win_type| # vert_wins, hori_wins, and diag_wins
+      # return_check_value = false
       win_type.each do |poss_win|
-        x = poss_win[0]; y = poss_win[1]; z = poss_win[2]
-        if check_hash.include?(x && y && z) && check_hash[x] == check_hash[y] &&
-           check_hash[y] == check_hash[z]
-          # puts "Player #{curr_player + 1} wins!"
-          true
+        x = poss_win[0]
+        y = poss_win[1]
+        z = poss_win[2]
+        if check_hash.include?(x && y && z) && check_hash[x] == check_hash[y] && check_hash[y] == check_hash[z]
+            puts "One of the winning combinations contains all the same position state. Player wins!"
+            true
         else
+          "No winning combinations."
           false
         end
       end
@@ -74,8 +77,6 @@ def game_result_check(win_check_array, curr_player)
     false
   end
 end
-
-
 
 # Single player turn
 curr_player = 0
@@ -123,5 +124,4 @@ while game_result_check(win_check_array, curr_player) != true
   puts ['_', pos_one.position_state, '_', '|', '_', pos_two.position_state, '_', '|', '_', pos_three.position_state, '_', "\n",
         '_', pos_four.position_state, '_', '|', '_', pos_five.position_state, '_', '|', '_', pos_six.position_state, '_', "\n",
         ' ', pos_seven.position_state, ' ', '|', ' ', pos_eight.position_state, ' ', '|', ' ', pos_nine.position_state, ' '].join
-  p game_result_check(win_check_array, curr_player)
 end
