@@ -29,6 +29,7 @@ BLANK16 = '_'
 BLANK79 = ' '
 
 def game_result_check(win_check_array, _curr_player)
+  result = false
   check_hash = {}
   vert_wins = [[1, 4, 7], [2, 5, 8], [3, 6, 9]]
   hori_wins = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
@@ -46,21 +47,18 @@ def game_result_check(win_check_array, _curr_player)
         y = poss_win[1]
         z = poss_win[2]
         if check_hash.include?(x && y && z) && check_hash[x] == check_hash[y] && check_hash[y] == check_hash[z]
-            puts "One of the winning combinations contains all the same position state. Player wins!"
-            true
+          puts 'One of the winning combinations contains all the same position state. Player wins!'
+          result = true
+          break
         else
-          if check_hash.count >= 8
-            puts "Tie! Restart the game."
-            exit
-          else
-          false
-          end
+          result = false
         end
       end
     end
   else
-    false
+    result = false
   end
+  result
 end
 
 puts "Tic Tac Toe! Player 1 is 'X'. Player 2 is 'O'.
@@ -77,7 +75,7 @@ while game_result_check(win_check_array, curr_player) != true
     player_input = STDIN.getch
     next unless player_input == "\e"
 
-    case current_position
+    case current_position # this is where to alter to prevent looping errors
     when (0..5)
       current_position += 1
       all_positions[current_position].position_state = all_players[curr_player].player_side
@@ -99,7 +97,7 @@ while game_result_check(win_check_array, curr_player) != true
   puts "\n" + 'Next player turn.'
   # removes position selected and sends to win_check_array
   win_check_array.push(all_positions[current_position])
-  all_positions.delete_at(current_position)
+  all_positions.delete_at(current_position) # the function of this line is something to consider to fix board loopability
   # resets position
   current_position = 0
   # switch player
@@ -114,3 +112,4 @@ while game_result_check(win_check_array, curr_player) != true
         '_', pos_four.position_state, '_', '|', '_', pos_five.position_state, '_', '|', '_', pos_six.position_state, '_', "\n",
         ' ', pos_seven.position_state, ' ', '|', ' ', pos_eight.position_state, ' ', '|', ' ', pos_nine.position_state, ' '].join
 end
+puts 'Game end.'
