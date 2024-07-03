@@ -3,6 +3,7 @@ require 'pry-byebug'
 
 require_relative 'lib/player'
 require_relative 'lib/position'
+require_relative 'lib/game-check'
 
 pos_one = Position.new('X', 1)
 pos_two = Position.new('_', 2)
@@ -28,38 +29,7 @@ board_array = ['_', pos_one.position_state, '_', '|', '_', pos_two.position_stat
 BLANK16 = '_'
 BLANK79 = ' '
 
-def game_result_check(win_check_array, _curr_player)
-  result = false
-  check_hash = {}
-  vert_wins = [[1, 4, 7], [2, 5, 8], [3, 6, 9]]
-  hori_wins = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
-  diag_wins = [[1, 5, 9], [3, 5, 7]]
-  win_possibilities = [vert_wins, hori_wins, diag_wins]
-  # create check_hash
-  win_check_array.each do |pos_obj|
-    check_hash[pos_obj.position_number] = pos_obj.position_state
-  end
-  if win_check_array.count > 4
-    # all win type check
-    win_possibilities.each do |win_type| # vert_wins, hori_wins, and diag_wins
-      win_type.each do |poss_win|
-        x = poss_win[0]
-        y = poss_win[1]
-        z = poss_win[2]
-        if check_hash.include?(x && y && z) && check_hash[x] == check_hash[y] && check_hash[y] == check_hash[z]
-          puts 'One of the winning combinations contains all the same position state. Player wins!'
-          result = true
-          break
-        else
-          result = false
-        end
-      end
-    end
-  else
-    result = false
-  end
-  result
-end
+
 
 puts "Tic Tac Toe! Player 1 is 'X'. Player 2 is 'O'.
 Use any arrow key to navigate. Press Enter to select position. Player 1 goes first."
@@ -89,10 +59,12 @@ while game_result_check(win_check_array, curr_player) != true
       all_positions[current_position].position_state = all_players[curr_player].player_side
       all_positions[8].position_state = BLANK79
     end
+
     puts "\n" + ['_', pos_one.position_state, '_', '|', '_', pos_two.position_state, '_', '|', '_', pos_three.position_state, '_', "\n",
                  '_', pos_four.position_state, '_', '|', '_', pos_five.position_state, '_', '|', '_', pos_six.position_state, '_', "\n",
                  ' ', pos_seven.position_state, ' ', '|', ' ', pos_eight.position_state, ' ', '|', ' ', pos_nine.position_state, ' '].join
   end
+
   # when enter key is pressed this runs
   puts "\n" + 'Next player turn.'
   # removes position selected and sends to win_check_array
