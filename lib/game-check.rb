@@ -1,4 +1,4 @@
-def game_result_check(win_check_array, _curr_player)
+def game_result_check(win_check_array, curr_player)
   result = false
   check_hash = {}
   vert_wins = [[1, 4, 7], [2, 5, 8], [3, 6, 9]]
@@ -12,16 +12,16 @@ def game_result_check(win_check_array, _curr_player)
   if win_check_array.count > 4
     # all win type check
     win_possibilities.each do |win_type| # vert_wins, hori_wins, and diag_wins
+      break if result == true
       win_type.each do |poss_win|
-        x = poss_win[0]
-        y = poss_win[1]
-        z = poss_win[2]
+        x = poss_win[0]; y = poss_win[1]; z = poss_win[2]
         if check_hash.include?(x && y && z) && check_hash[x] == check_hash[y] && check_hash[y] == check_hash[z]
-          puts 'One of the winning combinations contains all the same position state. Player wins!'
+          puts "One of the winning combinations contains all the same position state. Player wins!"
           result = true
           break
         else
           result = false
+          next
         end
       end
     end

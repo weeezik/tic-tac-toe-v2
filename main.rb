@@ -30,7 +30,6 @@ BLANK16 = '_'
 BLANK79 = ' '
 
 
-
 puts "Tic Tac Toe! Player 1 is 'X'. Player 2 is 'O'.
 Use any arrow key to navigate. Press Enter to select position. Player 1 goes first."
 puts board_array.join
@@ -59,12 +58,10 @@ while game_result_check(win_check_array, curr_player) != true
       all_positions[current_position].position_state = all_players[curr_player].player_side
       all_positions[8].position_state = BLANK79
     end
-
     puts "\n" + ['_', pos_one.position_state, '_', '|', '_', pos_two.position_state, '_', '|', '_', pos_three.position_state, '_', "\n",
                  '_', pos_four.position_state, '_', '|', '_', pos_five.position_state, '_', '|', '_', pos_six.position_state, '_', "\n",
                  ' ', pos_seven.position_state, ' ', '|', ' ', pos_eight.position_state, ' ', '|', ' ', pos_nine.position_state, ' '].join
   end
-
   # when enter key is pressed this runs
   puts "\n" + 'Next player turn.'
   # removes position selected and sends to win_check_array
