@@ -29,7 +29,6 @@ board_array = ['_', pos_one.position_state, '_', '|', '_', pos_two.position_stat
 BLANK16 = '_'
 BLANK79 = ' '
 
-
 puts "Tic Tac Toe! Player 1 is 'X'. Player 2 is 'O'.
 Use any arrow key to navigate. Press Enter to select position. Player 1 goes first."
 puts board_array.join
@@ -40,10 +39,10 @@ win_check_array = []
 while game_result_check(win_check_array, curr_player) != true
   current_position = 0
   player_input = ' '
+  # max_num = 7
   while player_input != "\r"
     player_input = STDIN.getch
     next unless player_input == "\e"
-
     case current_position # this is where to alter to prevent looping errors
     when (0..5)
       current_position += 1
@@ -58,6 +57,7 @@ while game_result_check(win_check_array, curr_player) != true
       all_positions[current_position].position_state = all_players[curr_player].player_side
       all_positions[8].position_state = BLANK79
     end
+
     puts "\n" + ['_', pos_one.position_state, '_', '|', '_', pos_two.position_state, '_', '|', '_', pos_three.position_state, '_', "\n",
                  '_', pos_four.position_state, '_', '|', '_', pos_five.position_state, '_', '|', '_', pos_six.position_state, '_', "\n",
                  ' ', pos_seven.position_state, ' ', '|', ' ', pos_eight.position_state, ' ', '|', ' ', pos_nine.position_state, ' '].join
@@ -69,12 +69,14 @@ while game_result_check(win_check_array, curr_player) != true
   all_positions.delete_at(current_position) # the function of this line is something to consider to fix board loopability
   # resets position
   current_position = 0
-  # switch player
+  # switches player
   if all_players[curr_player].player_side == 'X'
     curr_player = 1
   elsif all_players[curr_player].player_side == 'O'
     curr_player = 0
   end
+  p "Selected positions: #{win_check_array.count}"
+  p "Available positions: #{all_positions.count}"
   # shows board with the opposing, next player
   all_positions[current_position].position_state = all_players[curr_player].player_side
   puts ['_', pos_one.position_state, '_', '|', '_', pos_two.position_state, '_', '|', '_', pos_three.position_state, '_', "\n",
