@@ -33,13 +33,12 @@ puts "Tic Tac Toe! Player 1 is 'X'. Player 2 is 'O'.
 Use any arrow key to navigate. Press Enter to select position. Player 1 goes first."
 puts board_array.join
 
-# Single player turn
+# single player turn
 curr_player = 0
 win_check_array = []
 while game_result_check(win_check_array, curr_player) != true
   current_position = 0
   player_input = ' '
-  # max_num = 7
   while player_input != "\r"
     player_input = STDIN.getch
     next unless player_input == "\e"
@@ -64,20 +63,16 @@ while game_result_check(win_check_array, curr_player) != true
   end
   # when enter key is pressed this runs
   puts "\n" + 'Next player turn.'
-  # removes position selected and sends to win_check_array
   win_check_array.push(all_positions[current_position])
-  all_positions.delete_at(current_position) # the function of this line is something to consider to fix board loopability
-  # resets position
+  all_positions.delete_at(current_position) 
   current_position = 0
-  # switches player
   if all_players[curr_player].player_side == 'X'
     curr_player = 1
   elsif all_players[curr_player].player_side == 'O'
     curr_player = 0
   end
-  p "Selected positions: #{win_check_array.count}"
-  p "Available positions: #{all_positions.count}"
-  # shows board with the opposing, next player
+  puts "Selected positions: #{win_check_array.count}"
+  puts "Available positions: #{all_positions.count}\n"
   all_positions[current_position].position_state = all_players[curr_player].player_side
   puts ['_', pos_one.position_state, '_', '|', '_', pos_two.position_state, '_', '|', '_', pos_three.position_state, '_', "\n",
         '_', pos_four.position_state, '_', '|', '_', pos_five.position_state, '_', '|', '_', pos_six.position_state, '_', "\n",
